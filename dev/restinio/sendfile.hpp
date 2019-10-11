@@ -190,7 +190,7 @@ class file_meta_t
 		}
 
 		file_meta_t() noexcept
-		= default;
+		{}
 
 		file_meta_t(
 			file_size_t file_total_size,
@@ -473,7 +473,7 @@ sendfile(
 	//! The max size of a data to be send on a single iteration.
 	file_size_t chunk_size = sendfile_default_chunk_size ) noexcept
 {
-	return sendfile_t{ std::move( fd ), meta , chunk_size };
+	return sendfile_t{ std::move( fd ), meta, chunk_size };
 }
 
 inline sendfile_t
@@ -487,7 +487,7 @@ sendfile(
 
 	auto meta = get_file_meta< file_meta_t >( fd.fd() );
 
-	return sendfile( std::move( fd ), meta , chunk_size );
+	return sendfile( std::move( fd ), meta, chunk_size );
 }
 
 inline sendfile_t

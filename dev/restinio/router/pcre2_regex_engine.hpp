@@ -96,8 +96,9 @@ class regex_t final
 		regex_t & operator = ( const regex_t & ) = delete;
 
 		regex_t( regex_t && rw ) noexcept
+			: m_route_regex{ rw.m_route_regex }
 		{
-			(*this) = std::move( rw );
+			rw.m_route_regex = nullptr;
 		}
 
 		regex_t & operator = ( regex_t && rw ) noexcept
@@ -144,7 +145,7 @@ class regex_t final
 
 			if( nullptr == m_route_regex )
 			{
-				std::array< unsigned char, 256 > buffer{};
+				std::array< unsigned char, 256 > buffer;
 				(void)pcre2_get_error_message( errorcode, buffer.data(), buffer.size() );
 				throw exception_t{
 						fmt::format(
